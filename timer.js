@@ -1,5 +1,5 @@
 'use strict'
-let counterMilSec = 0;
+let timer = null;
 const timetable = {
   milSec: 0,
   sec: 0,
@@ -11,7 +11,8 @@ const timetable = {
  * @return {String} 10分の１秒
  */
 function milSec() {
-  return timetable.milSec = counterMilSec + '';
+  timetable.milSec++
+  return timetable.milSec + '';
 }
 /**
  * 分を返す60秒になったら0秒にする
@@ -30,16 +31,31 @@ function milSecToSec() {
  * @return {Number}
  */
 function milSecTomin(){
-  return timetable.min = Math.floor(counterMilSec / 600);
+  timetable.min++
+  return Math.floor(timetable.min / 600);
 }
-
+/**
+ * 10の位に0を挿入して数字の桁数を合わせる
+ * @return {String} 0を足した文字列
+ * @param {Number} num 秒、分など
+ */
 function toDoubleDigits(num){
-  num.toString(10);
-
+  num += '';
+  if (num.length === 1) {
+    return num = `0${num}`;
+  } else {
+    return num;
+  }
 }
 
-setInterval(() => {
-  counterMilSec++;
+function start() {
+  timer = setInterval(() => {
     document.getElementById('timer').innerText =
-    `${milSecTomin()}分${Math.floor(milSecToSec())}.${milSec().slice(-1)}秒` 
-}, 100);
+    `${toDoubleDigits(milSecTomin())}分` +
+    `${toDoubleDigits(Math.floor(milSecToSec()))}.${milSec().slice(-1)}秒` 
+  }, 10);
+}
+function stop() {
+  clearInterval(timer);
+}
+
