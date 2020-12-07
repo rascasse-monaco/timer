@@ -1,6 +1,7 @@
 'use strict'
-let timer = null;
 const timetable = {
+  timer: null,
+  switch: 0,
   milSec: 0,
   sec: 0,
   min: 0,
@@ -20,19 +21,35 @@ function milSec() {
  */
 function milSecToSec() {
     timetable.sec++
-    if (timetable.sec === 600) {
+    if (timetable.sec === 60*10) {
       return timetable.sec = 0;
     } else {
     return timetable.sec / 10;
     }
 }
 /**
- * 60秒毎に分を返す
+ * 60秒毎に分を返す60分になったら0分にする
  * @return {Number}
  */
-function milSecTomin(){
+function milSecToMin() {
   timetable.min++
-  return Math.floor(timetable.min / 600);
+  if (timetable.min === 60*60*10){
+    return timetable.min = 0;
+  } else {
+  return Math.floor(timetable.min / (60*10));
+  }
+}
+/**
+ * 60分に1時間を返す24時間になったら00時間にする
+ * @return {Number}
+ */
+function milSecToHour() {
+  timetable.hour++
+  if (timetable.hour === 24*60*60*10) {
+    return timetable.hour = 0;
+  } else {
+    return Math.floor(timetable.hour / (60*60*10));
+  }
 }
 /**
  * 10の位に0を挿入して数字の桁数を合わせる
@@ -47,15 +64,30 @@ function toDoubleDigits(num){
     return num;
   }
 }
+//スタート後スタートボタンを二回押しできなくする。
+function startBtn() {
+  if (timetable.switch === 0) {
+    start();
+  } else {}
+}
 
 function start() {
-  timer = setInterval(() => {
+  timetable.switch = 1;
+  timetable.timer = setInterval(() => {
     document.getElementById('timer').innerText =
-    `${toDoubleDigits(milSecTomin())}分` +
+    `${toDoubleDigits(milSecToHour())}時間` +
+    `${toDoubleDigits(milSecToMin())}分` +
     `${toDoubleDigits(Math.floor(milSecToSec()))}.${milSec().slice(-1)}秒` 
-  }, 10);
+  }, 1);
+
+  console.log(`start時timetable.timer=${timetable.timer}`);
 }
 function stop() {
-  clearInterval(timer);
+  timetable.switch = 0;
+      clearInterval(timetable.timer);
+    console.log(`stop時timetable.timer=${timetable.timer}`);
 }
 
+function reload() {
+  location.reload();
+}
