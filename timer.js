@@ -74,10 +74,12 @@ function startBtn() {
 function start() {
   timetable.switch = 1;
   timetable.timer = setInterval(() => {
-    document.getElementById('timer').innerText =
-    `${toDoubleDigits(milSecToHour())}時間` +
-    `${toDoubleDigits(milSecToMin())}分` +
-    `${toDoubleDigits(Math.floor(milSecToSec()))}.${milSec().slice(-1)}秒` 
+    document.getElementById('sec').innerText =
+    `${toDoubleDigits(Math.floor(milSecToSec()))}.${milSec().slice(-1)}`
+    document.getElementById('min').innerText =
+    `${toDoubleDigits(milSecToMin())}`
+    document.getElementById('hour').innerText =
+    `${toDoubleDigits(milSecToHour())}`
   }, 1);
 
   console.log(`start時timetable.timer=${timetable.timer}`);
