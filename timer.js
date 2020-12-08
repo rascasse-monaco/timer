@@ -80,7 +80,7 @@ function start() {
     `${toDoubleDigits(milSecToMin())}`
     document.getElementById('hour').innerText =
     `${toDoubleDigits(milSecToHour())}`
-  }, 1);
+  }, 100);
 
   console.log(`start時timetable.timer=${timetable.timer}`);
 }
