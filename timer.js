@@ -8,21 +8,21 @@ const timetable = {
  * 分を返す60秒になったら0秒にする
  * @return {Number}
  */
-function milSecToSec(count) {
+function countToSec(count) {
     return Math.floor(count / 10 % 60);
 }
 /**
  * 60秒毎に分を返す60分になったら0分にする
  * @return {Number}
  */
-function milSecToMin(count) {
+function countToMin(count) {
   return Math.floor(count / (60*10) % 60);
 }
 /**
  * 60分に1時間を返す24時間になったら00時間にする
  * @return {Number}
  */
-function milSecToHour(count) {
+function countToHour(count) {
     return Math.floor(count / (60*60*10) % 24);
 }
 /**
@@ -30,7 +30,7 @@ function milSecToHour(count) {
  * @return {String} 0を足した文字列
  * @param {Number} num 秒、分など
  */
-function toDoubleDigits(num){
+function makeDoubleDigits(num){
   num += '';
   if (num.length === 1) {
     return num = `0${num}`;
@@ -51,16 +51,16 @@ function start() {
   timetable.timer = setInterval(() => {
     count++
     document.getElementById('sec').innerText =
-    `${toDoubleDigits(milSecToSec(count))}.${count.toString().slice(-1)}`
+    `${makeDoubleDigits(countToSec(count))}.${count.toString().slice(-1)}`
     document.getElementById('min').innerText =
-    `${toDoubleDigits(milSecToMin(count))}`
+    `${makeDoubleDigits(countToMin(count))}`
     document.getElementById('hour').innerText =
-    `${toDoubleDigits(milSecToHour(count))}`
+    `${makeDoubleDigits(countToHour(count))}`
   }, 100);
 }
 function stop() {
   timetable.switch = 0;
-    clearInterval(timetable.timer);
+  clearInterval(timetable.timer);
 }
 
 function reload() {
