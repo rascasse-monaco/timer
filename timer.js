@@ -81,13 +81,10 @@ function start() {
     document.getElementById('hour').innerText =
     `${toDoubleDigits(milSecToHour())}`
   }, 100);
-
-  console.log(`start時timetable.timer=${timetable.timer}`);
 }
 function stop() {
   timetable.switch = 0;
       clearInterval(timetable.timer);
-    console.log(`stop時timetable.timer=${timetable.timer}`);
 }
 
 function reload() {
