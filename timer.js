@@ -1,5 +1,5 @@
 'use strict'
-
+let count = 0;
 let setIntervalID = null;
 /**
  * conuntを時間に変換
@@ -34,7 +34,6 @@ function startBtn() {
 }
 
 function start() {
-  let count = 0;
   setIntervalID = setInterval(() => {
     count++
     document.getElementById('sec').innerText =
@@ -43,7 +42,7 @@ function start() {
     `${makeDoubleDigits(countToTime(count).min)}`
     document.getElementById('hour').innerText =
     `${makeDoubleDigits(countToTime(count).hour)}`
-  }, 1);
+  }, 100);
 }
 function stop(intervalID) {
   replaceButton('button', 'startDeactivate','button', 'start', 'startBtn()','Start');
