@@ -24,9 +24,18 @@
   width: 166px;
   margin-right: 4px;
 }
-
+#startDeactivate {
+  background-color: rgb(190, 190, 190);
+  width: 166px;
+  margin-right: 4px;  
+}
 #stop {
-  background-color: rgb(119, 119, 119);
+  background-color: rgb(64, 101, 189);
+  width: 74px;
+  margin-right: 4px;
+}
+#stopDeactivate {
+  background-color: rgb(190, 190, 190);
   width: 74px;
   margin-right: 4px;
 }

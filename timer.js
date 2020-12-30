@@ -1,9 +1,6 @@
 'use strict'
 
-const globalTable = {
-  timer: null,
-  switch: 0,
-}
+let setIntervalID = null;
 /**
  * conuntを時間に変換
  * @param {Number} 1/10秒の数を入れる。
@@ -29,18 +26,16 @@ function makeDoubleDigits(num){
     return num;
   }
 }
-//スタート後スタートボタンを二回押しできなくする。
+//スタートボタンの動作。
 function startBtn() {
-  if (globalTable.switch === 0) {
+    replaceButton('button', 'start','button', 'startDeactivate', '','Start');
+    replaceButton('button', 'stopDeactivate','button', 'stop', 'stop(setIntervalID)','Stop');
     start();
-    console.log(start.name);
-  }
 }
 
 function start() {
   let count = 0;
-  globalTable.switch = 1;
-  globalTable.timer = setInterval(() => {
+  setIntervalID = setInterval(() => {
     count++
     document.getElementById('sec').innerText =
     `${makeDoubleDigits(countToTime(count).sec)}.${count.toString().slice(-1)}`
@@ -48,13 +43,27 @@ function start() {
     `${makeDoubleDigits(countToTime(count).min)}`
     document.getElementById('hour').innerText =
     `${makeDoubleDigits(countToTime(count).hour)}`
-  }, 100);
+  }, 1);
 }
 function stop(intervalID) {
-  globalTable.switch = 0;
+  replaceButton('button', 'startDeactivate','button', 'start', 'startBtn()','Start');
+  replaceButton('button', 'stop','button', 'stopDeactivate', '','Stop');
   clearInterval(intervalID);
 }
 
 function reload() {
   location.reload();
+}
+
+function replaceButton(parentID, oldChildID, createElement, newChildID, onclick, innerHTMLtext) {
+  const parentElement = document.getElementById(`${parentID}`);
+  const oldChild = document.getElementById(`${oldChildID}`)
+  const newChild = document .createElement(`${createElement}`);
+  newChild.setAttribute('type', 'button');
+  newChild.setAttribute('class', 'button');
+  newChild.setAttribute('id', `${newChildID}`);
+  newChild.setAttribute('onclick', `${onclick}`);
+  newChild.innerHTML = innerHTMLtext;
+       
+  parentElement.replaceChild(newChild, oldChild);
 }
