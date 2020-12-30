@@ -5,25 +5,16 @@ const timetable = {
   switch: 0,
 }
 /**
- * 分を返す60秒になったら0秒にする
+ * conuntを時間に変換
+ * @param {Number} countに数字を入れる。
  * @return {Number}
  */
-function countToSec(count) {
-    return Math.floor(count / 10 % 60);
-}
-/**
- * 60秒毎に分を返す60分になったら0分にする
- * @return {Number}
- */
-function countToMin(count) {
-  return Math.floor(count / (60*10) % 60);
-}
-/**
- * 60分に1時間を返す24時間になったら00時間にする
- * @return {Number}
- */
-function countToHour(count) {
-    return Math.floor(count / (60*60*10) % 24);
+function countToTime(count) {
+  return {
+    sec: Math.floor(count / 10 % 60),//分を返す60秒になったら0秒にする
+    min: Math.floor(count / (60*10) % 60),//60秒毎に分を返す60分になったら0分にする
+    hour: Math.floor(count / (60*60*10) % 24)//60分に時間を返す24時間になったら00時間にする
+  }
 }
 /**
  * 10の位に0を挿入して数字の桁数を合わせる
@@ -51,16 +42,16 @@ function start() {
   timetable.timer = setInterval(() => {
     count++
     document.getElementById('sec').innerText =
-    `${makeDoubleDigits(countToSec(count))}.${count.toString().slice(-1)}`
+    `${makeDoubleDigits(countToTime(count).sec)}.${count.toString().slice(-1)}`
     document.getElementById('min').innerText =
-    `${makeDoubleDigits(countToMin(count))}`
+    `${makeDoubleDigits(countToTime(count).min)}`
     document.getElementById('hour').innerText =
-    `${makeDoubleDigits(countToHour(count))}`
+    `${makeDoubleDigits(countToTime(count).hour)}`
   }, 100);
 }
-function stop() {
+function stop(intervalID) {
   timetable.switch = 0;
-  clearInterval(timetable.timer);
+  clearInterval(intervalID);
 }
 
 function reload() {
