@@ -1,18 +1,22 @@
 'use strict'
 import { makeDoubleDigits, countToTime } from './time-handling-util.js';
+import { replaceButton, buttonEventListener } from './button-util.js';
 
 let count = 0;
 let setIntervalID = null;
+
+//EventListenerの設定。
+buttonEventListener('start', 'click', startBtn);
+buttonEventListener('reload', 'click', reload);
 
 //スタートボタンの動作。
 function startBtn() {
     replaceButton('button', 'start','button', 'startDeactivate', 'Start');
     replaceButton('button', 'stopDeactivate','button', 'stop', 'Stop');
     start();
-    const stopButton = document.getElementById('stop');
-    stopButton.addEventListener( 'click', stop, false );
+    buttonEventListener('stop', 'click', stop);
 }
-
+//タイマー表示&時間更新用関数。
 function start() {
   setIntervalID = setInterval(() => {
     count++
@@ -24,32 +28,14 @@ function start() {
     `${makeDoubleDigits(countToTime(count).hour)}`
   }, 100);
 }
+//ストップボタンの動作。
 function stop() {
   replaceButton('button', 'startDeactivate','button', 'start', 'Start');
   replaceButton('button', 'stop','button', 'stopDeactivate','Stop');
   clearInterval(setIntervalID);
-  const startButton = document.getElementById('start');
-  startButton.addEventListener( 'click', startBtn, false );
+  buttonEventListener('start', 'click', startBtn);
 }
-
+//リセットボタンの動作。
 function reload() {
   location.reload();
 }
-
-function replaceButton(parentID, oldChildID, createElement, newChildID, innerHTMLtext) {
-  const parentElement = document.getElementById(`${parentID}`);
-  const oldChild = document.getElementById(`${oldChildID}`)
-  const newChild = document .createElement(`${createElement}`);
-  newChild.setAttribute('type', 'button');
-  newChild.setAttribute('class', 'button');
-  newChild.setAttribute('id', `${newChildID}`);
-  newChild.innerHTML = innerHTMLtext;
-       
-  parentElement.replaceChild(newChild, oldChild);
-}
-
-const startButton = document.getElementById('start');
-startButton.addEventListener( 'click', startBtn, false );
-
-const reloadButton = document.getElementById('reload');
-reloadButton.addEventListener( 'click', reload, false );
