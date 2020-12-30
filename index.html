@@ -5,13 +5,13 @@
     <link rel="stylesheet" href="timer.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <title>ストップウォッチA</title>
+    <title>ストップウォッチ</title>
   </head>
 <body>
     <div class="watchtext">
       <span class="watchnum" id="hour">00</span>hr.<span class="watchnum" id="min">00</span>min.<span class="watchnum" id="sec">00.0</span>sec.
     </div>
-    <button type="button" class="button" id="start" onclick="startBtn()">Start</button><button type="button" class="button" id="stop" onclick="stop(timetable.timer)">Stop</button><button type="button" class="button" id="reload" onclick="reload()">Reset</button>
+    <button type="button" class="button" id="start" onclick="startBtn()">Start</button><button type="button" class="button" id="stop" onclick="stop(globalTable.timer)">Stop</button><button type="button" class="button" id="reload" onclick="reload()">Reset</button>
     <script src="timer.js"></script>
   </body>
 </html>

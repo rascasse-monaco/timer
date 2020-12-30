@@ -1,12 +1,12 @@
 'use strict'
 
-const timetable = {
+const globalTable = {
   timer: null,
   switch: 0,
 }
 /**
  * conuntを時間に変換
- * @param {Number} countに数字を入れる。
+ * @param {Number} 1/10秒の数を入れる。
  * @return {Number}
  */
 function countToTime(count) {
@@ -31,15 +31,16 @@ function makeDoubleDigits(num){
 }
 //スタート後スタートボタンを二回押しできなくする。
 function startBtn() {
-  if (timetable.switch === 0) {
+  if (globalTable.switch === 0) {
     start();
-  } else {}
+    console.log(start.name);
+  }
 }
 
 function start() {
   let count = 0;
-  timetable.switch = 1;
-  timetable.timer = setInterval(() => {
+  globalTable.switch = 1;
+  globalTable.timer = setInterval(() => {
     count++
     document.getElementById('sec').innerText =
     `${makeDoubleDigits(countToTime(count).sec)}.${count.toString().slice(-1)}`
@@ -50,7 +51,7 @@ function start() {
   }, 100);
 }
 function stop(intervalID) {
-  timetable.switch = 0;
+  globalTable.switch = 0;
   clearInterval(intervalID);
 }
 
